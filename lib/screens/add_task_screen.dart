@@ -47,7 +47,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               FlatButton(
                 color: Colors.lightBlueAccent,
                 onPressed: () {
-                  print(value);
                   widget.addTasks(value);
                 },
                 child: Text(

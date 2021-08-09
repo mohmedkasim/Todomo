@@ -10,7 +10,7 @@ class TasksList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TaskData>(
       builder: (BuildContext context, taskData, Widget child) {
-        if (taskData.tasks == null || taskData.tasks.length < 1) {
+        if (taskData.tasks == null || taskData.countTasks() < 1) {
           return Center(child: Text('There is no tasks'));
         }
         return ListView.builder(

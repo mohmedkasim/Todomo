@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list/models/task.dart';
+import 'package:todo_list/models/task_data.dart';
 import 'package:todo_list/screens/add_task_screen.dart';
 import 'package:todo_list/widgets/TasksList.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'Buy eggs'),
-    Task(name: 'Delivery food')
-  ];
-
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +30,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         color: Colors.white,
                         fontSize: 50.0,
                         fontWeight: FontWeight.w700)),
-                Text('12 Tasks',
+                Text('${Provider.of<TaskData>(context).tasks.length} Tasks',
                     style: TextStyle(color: Colors.white, fontSize: 18)),
               ],
             ),
@@ -52,9 +43,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10))),
-                child: TasksList(
-                  tasks: tasks,
-                )),
+                child: TasksList()),
           )
         ],
       ),
@@ -65,9 +54,10 @@ class _TasksScreenState extends State<TasksScreen> {
           showModalBottomSheet(
               context: context,
               builder: (context) => AddTaskScreen((newTask) {
-                    setState(() {
-                      tasks.add(new Task(name: newTask));
-                    });
+                    Provider.of<TaskData>(context)
+                        .tasks
+                        .add(new Task(name: newTask));
+
                     Navigator.pop(context);
                   }));
         },
